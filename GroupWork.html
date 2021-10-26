@@ -9,12 +9,21 @@
 
 <body>
     <div id="lessons">
+        <p>Subject: {{subject}}</p>
+        <p>Location: {{location}}</p>
+        <p>Price: {{price}}</p>
+        <p id="spaces">Spaces: {{spaces}}</p>
         <button id="addToCart" v-on:click="add">Add to cart</button>
     </div>
     <script>
         let app = new Vue({
             el: "#lessons",
             data: {
+                image:"maths.jpg",
+                subject: "Math",
+                location: "London",
+                price: "£100",
+                spaces: 5,
             },
         })
     </script>
