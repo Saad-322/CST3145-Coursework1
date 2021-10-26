@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ToDo (Vue.js version)</title>
+    <!-- Load the Vue.js as a JavaScrip library -->
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="lessons.js"></script>
+</head>
+
+<body>
+    <ul id="example-2">
+        <li v-for="(lesson, lessons) in lessons">
+            <span class="fas fa-calculator fa-4x"></span><br>
+           Subject: {{ lesson.Subject }} <br>
+           Location: {{ lesson.Location }} <br>
+           Price: {{ lesson.Price }} <br>
+           Spaces: {{ lesson.Spaces }} <br>
+           <button>Add to Cart</button>
+           <br>
+        </li>
+    </ul>
+
+</body>
+<script>
+    let example2 = new Vue({
+        el: '#example-2',
+        data: {
+            lessons: [
+                { Subject: "Maths", Location: "London", Price: "£100", Spaces: 5},
+                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
+                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
+                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
+                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
+                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
+                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
+                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
+                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
+            ]
+        }
+    })
+
+</script>
+
+</html>
