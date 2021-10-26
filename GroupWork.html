@@ -27,6 +27,14 @@
                 price: "£100",
                 spaces: 5,
             },
+            methods: {
+                add: function () {
+                    if (app.spaces > 0) {
+                        app.spaces--;
+                        document.getElementById("spaces").innerText = "Spaces: "+app.spaces;
+                    }
+                }
+            }
         })
     </script>
 </body>
