@@ -33,6 +33,9 @@
                         app.spaces--;
                         document.getElementById("spaces").innerText = "Spaces: "+app.spaces;
                     }
+                    if (app.spaces == 0) {
+                        document.getElementById("addToCart").innerText = " ";
+                    }
                 }
             }
         })
