@@ -12,7 +12,9 @@
 <body>
     <ul id="example-2">
         <li v-for="(lesson, lessons) in lessons">
-            <span class="fas fa-calculator fa-4x"></span><br>
+            <span class="fas fa-calculator fa-4x">
+                <img v-bind:src="lesson.Image" alt="" width="60px" height="55px"> 
+            </span><br>
            Subject: {{ lesson.Subject }} <br>
            Location: {{ lesson.Location }} <br>
            Price: {{ lesson.Price }} <br>
@@ -27,17 +29,8 @@
     let example2 = new Vue({
         el: '#example-2',
         data: {
-            lessons: [
-                { Subject: "Maths", Location: "London", Price: "£100", Spaces: 5},
-                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
-                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
-                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
-                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
-                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
-                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
-                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
-                { Subject: "Maths", Location: "Oxford", Price: "£100", Spaces: 5},
-            ]
+            lessons: lessonsArray,
+            image: "maths.jpg",
         }
     })
 
