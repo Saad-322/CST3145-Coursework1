@@ -111,7 +111,16 @@
                 return this.showProduct = this.showProduct ? false : true;
             },
             submitForm() {
-                alert("Order Submitted");
+                let letters = /^[a-z]+$/i;
+                let numbers = /^[0-9]+$/i;
+                if(letters.test(this.order.firstName)&&
+                letters.test(this.order.lastName)&&numbers.test(this.order.phoneNumber)){
+                    alert("order submitted");
+                }
+                else{
+                    alert("incorrect name/phone number format");
+                }
+               
             },
             canAddToCart(lesson) {
                 return lesson.Spaces > 0;
