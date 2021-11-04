@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lessons</title>
+    <!-- Load the Vue.js as a JavaScrip library -->
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+
+<body>
+    <div id="lessons">
+        <span class="fas fa-calculator fa-7x"></span>
+        <p>Subject: {{subject}}</p>
+        <p>Location: {{location}}</p>
+        <p>Price: {{price}}</p>
+        <p id="spaces">Spaces: {{spaces}}</p>
+        <button id="addToCart" v-on:click="add">Add to cart</button>
+    </div>
+    <script>
+        let app = new Vue({
+            el: "#lessons",
+            data: {
+                image:"maths.jpg",
+                subject: "Math",
+                location: "London",
+                price: "£100",
+                spaces: 5,
+            },
+            methods: {
+                add() {
+                    if (app.spaces > 0) {
+                        app.spaces--;
+                        document.getElementById("spaces").innerText = "Spaces: "+app.spaces;
+                    }
+                    if (app.spaces == 0) {
+                        document.getElementById("addToCart").innerText = " ";
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
