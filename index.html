@@ -12,7 +12,7 @@
 <body>
     <div id="example-2">
         <div v-if="showProduct">
-            <h1>{{sitename}}</h1>
+            <h1>Lessons</h1>
             <button @click="showCheckout()" :disabled="cartEmpty">
                 <span class="fas fa-shopping-basket"> checkout</span>
                 {{cartItemCount}}
@@ -30,14 +30,30 @@
                     <br>
                 </p>
             </ul>
-   
+
         </div>
         <div v-else>
-            <h1>{{sitename}}</h1>
+            <h1>Checkout</h1>
             <button @click="showCheckout()">
                 <span class="fab fa-product-hunt"> products</span>
             </button>
-            <h2>Checkout</h2>
+            <h2>Your cart</h2>
+            <ul>
+                <p v-for="(lesson, lessons) in cart">
+                    <span class="fas fa-calculator fa-2x">
+                        <img v-bind:src="lesson.Image" alt="" width="60px" height="55px">
+                    </span><br>
+                    Subject: {{ lesson.Subject }} <br>
+                    Location: {{ lesson.Location }} <br>
+                    Price: {{ lesson.Price }} <br>
+                    <!-- Spaces: {{ lesson.Spaces }} <br> can modify code to add count -->
+                    <button @click="removeFromCart(lesson)">Remove from cart</button>
+                    <br>
+                </p>
+            </ul>
+
+
+            <h2>Details</h2>
             <p>
                 <strong>First Name: </strong>
                 <input type="text" v-model.trim=order.firstName>
@@ -85,7 +101,11 @@
             addToCart(lesson) {
                 console.log("added to cart");
                 this.cart.push(lesson);
-                lesson.Spaces --;
+                lesson.Spaces--;
+            },
+            removeFromCart(lesson) {
+                this.cart.splice(lesson,1);
+                lesson.Spaces++;
             },
             showCheckout() {
                 return this.showProduct = this.showProduct ? false : true;
@@ -105,7 +125,7 @@
             cartEmpty() {
                 return this.cart.length == 0;
             }
-      
+
         }
 
     })
