@@ -10,28 +10,104 @@
 </head>
 
 <body>
-    <ul id="example-2">
-        <li v-for="(lesson, lessons) in lessons">
-            <span class="fas fa-calculator fa-4x">
-                <img v-bind:src="lesson.Image" alt="" width="60px" height="55px"> 
-            </span><br>
-           Subject: {{ lesson.Subject }} <br>
-           Location: {{ lesson.Location }} <br>
-           Price: {{ lesson.Price }} <br>
-           Spaces: {{ lesson.Spaces }} <br>
-           <button>Add to Cart</button>
-           <br>
-        </li>
-    </ul>
+    <div id="example-2">
+        <div v-if="showProduct">
+            <h1>{{sitename}}</h1>
+            <button @click="showCheckout()" :disabled="cartEmpty">
+                <span class="fas fa-shopping-basket"> checkout</span>
+                {{cartItemCount}}
+            </button>
+            <ul>
+                <p v-for="(lesson, lessons) in lessons">
+                    <span class="fas fa-calculator fa-2x">
+                        <img v-bind:src="lesson.Image" alt="" width="60px" height="55px">
+                    </span><br>
+                    Subject: {{ lesson.Subject }} <br>
+                    Location: {{ lesson.Location }} <br>
+                    Price: {{ lesson.Price }} <br>
+                    Spaces: {{ lesson.Spaces }} <br>
+                    <button @click="addToCart(lesson)" :disabled="!canAddToCart(lesson)">Add to cart</button>
+                    <br>
+                </p>
+            </ul>
+   
+        </div>
+        <div v-else>
+            <h1>{{sitename}}</h1>
+            <button @click="showCheckout()">
+                <span class="fab fa-product-hunt"> products</span>
+            </button>
+            <h2>Checkout</h2>
+            <p>
+                <strong>First Name: </strong>
+                <input type="text" v-model.trim=order.firstName>
+            </p>
+            <p>
+                <strong>Last Name: </strong>
+                <input type="text" v-model.trim=order.lastName>
+            </p>
+            <p>
+                <strong>Phone Number: </strong>
+                <input type="text" v-model.trim=order.phoneNumber>
+            </p>
+            <input type="checkbox" value="gift" v-model=order.gift>
+            <label>Ship as Gift?</label>
+            <br>
+            <br>
+            <h3>Order Information</h3>
+            <p>First Name: {{order.firstName}}</p>
+            <p>Last Name: {{order.lastName}}</p>
+            <p>Phone Number: {{order.phoneNumber}}</p>
+            <p>Gift: {{order.gift}}</p>
+            <button @Click="submitForm">Place Order</button>
+        </div>
+    </div>
+
 
 </body>
 <script>
     let example2 = new Vue({
         el: '#example-2',
         data: {
+            sitename: "Lessons",
+            showProduct: "true",
             lessons: lessonsArray,
-            image: "maths.jpg",
+            cart: [],
+            availableStock: 5,
+            order: {
+                firstName: "",
+                lastName: "",
+                phoneNumber: "",
+                gift: false,
+            }
+        },
+        methods: {
+            addToCart(lesson) {
+                console.log("added to cart");
+                this.cart.push(lesson);
+                lesson.Spaces --;
+            },
+            showCheckout() {
+                return this.showProduct = this.showProduct ? false : true;
+            },
+            submitForm() {
+                alert("Order Submitted");
+            },
+            canAddToCart(lesson) {
+                return lesson.Spaces > 0;
+            }
+
+        },
+        computed: {
+            cartItemCount() {
+                return this.cart.length || '0';
+            },
+            cartEmpty() {
+                return this.cart.length == 0;
+            }
+      
         }
+
     })
 
 </script>
