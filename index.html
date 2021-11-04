@@ -2,44 +2,114 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Lessons</title>
+    <title>ToDo (Vue.js version)</title>
     <!-- Load the Vue.js as a JavaScrip library -->
     <script src="https://unpkg.com/vue"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="lessons.js"></script>
 </head>
 
 <body>
-    <div id="lessons">
-        <span class="fas fa-calculator fa-7x"></span>
-        <p>Subject: {{subject}}</p>
-        <p>Location: {{location}}</p>
-        <p>Price: {{price}}</p>
-        <p id="spaces">Spaces: {{spaces}}</p>
-        <button id="addToCart" v-on:click="add">Add to cart</button>
+    <div id="example-2">
+        <div v-if="showProduct">
+            <h1>{{sitename}}</h1>
+            <button @click="showCheckout()" :disabled="cartEmpty">
+                <span class="fas fa-shopping-basket"> checkout</span>
+                {{cartItemCount}}
+            </button>
+            <ul>
+                <p v-for="(lesson, lessons) in lessons">
+                    <span class="fas fa-calculator fa-2x">
+                        <img v-bind:src="lesson.Image" alt="" width="60px" height="55px">
+                    </span><br>
+                    Subject: {{ lesson.Subject }} <br>
+                    Location: {{ lesson.Location }} <br>
+                    Price: {{ lesson.Price }} <br>
+                    Spaces: {{ lesson.Spaces }} <br>
+                    <button @click="addToCart(lesson)" :disabled="!canAddToCart(lesson)">Add to cart</button>
+                    <br>
+                </p>
+            </ul>
+   
+        </div>
+        <div v-else>
+            <h1>{{sitename}}</h1>
+            <button @click="showCheckout()">
+                <span class="fab fa-product-hunt"> products</span>
+            </button>
+            <h2>Checkout</h2>
+            <p>
+                <strong>First Name: </strong>
+                <input type="text" v-model.trim=order.firstName>
+            </p>
+            <p>
+                <strong>Last Name: </strong>
+                <input type="text" v-model.trim=order.lastName>
+            </p>
+            <p>
+                <strong>Phone Number: </strong>
+                <input type="text" v-model.trim=order.phoneNumber>
+            </p>
+            <input type="checkbox" value="gift" v-model=order.gift>
+            <label>Ship as Gift?</label>
+            <br>
+            <br>
+            <h3>Order Information</h3>
+            <p>First Name: {{order.firstName}}</p>
+            <p>Last Name: {{order.lastName}}</p>
+            <p>Phone Number: {{order.phoneNumber}}</p>
+            <p>Gift: {{order.gift}}</p>
+            <button @Click="submitForm">Place Order</button>
+        </div>
     </div>
-    <script>
-        let app = new Vue({
-            el: "#lessons",
-            data: {
-                image:"maths.jpg",
-                subject: "Math",
-                location: "London",
-                price: "£100",
-                spaces: 5,
-            },
-            methods: {
-                add() {
-                    if (app.spaces > 0) {
-                        app.spaces--;
-                        document.getElementById("spaces").innerText = "Spaces: "+app.spaces;
-                    }
-                    if (app.spaces == 0) {
-                        document.getElementById("addToCart").innerText = " ";
-                    }
-                }
-            }
-        })
-    </script>
+
+
 </body>
+<script>
+    let example2 = new Vue({
+        el: '#example-2',
+        data: {
+            sitename: "Lessons",
+            showProduct: "true",
+            lessons: lessonsArray,
+            cart: [],
+            availableStock: 5,
+            order: {
+                firstName: "",
+                lastName: "",
+                phoneNumber: "",
+                gift: false,
+            }
+        },
+        methods: {
+            addToCart(lesson) {
+                console.log("added to cart");
+                this.cart.push(lesson);
+                lesson.Spaces --;
+            },
+            showCheckout() {
+                return this.showProduct = this.showProduct ? false : true;
+            },
+            submitForm() {
+                alert("Order Submitted");
+            },
+            canAddToCart(lesson) {
+                return lesson.Spaces > 0;
+            }
+
+        },
+        computed: {
+            cartItemCount() {
+                return this.cart.length || '0';
+            },
+            cartEmpty() {
+                return this.cart.length == 0;
+            }
+      
+        }
+
+    })
+
+</script>
 
 </html>
