@@ -49,7 +49,7 @@
                     </span><br>
                     Subject: {{ lesson.Subject }} <br>
                     Location: {{ lesson.Location }} <br>
-                    Price: {{ lesson.Price }} <br>
+                    Price: £{{ lesson.Price }} <br>
                     Spaces: {{ lesson.Spaces }} <br>
                     <button @click="addToCart(lesson)" :disabled="!canAddToCart(lesson)">Add to cart</button>
                     <br>
@@ -69,7 +69,7 @@
                     </span><br>
                     Subject: {{ lesson.Subject }} <br>
                     Location: {{ lesson.Location }} <br>
-                    Price: {{ lesson.Price }} <br>
+                    Price: £{{ lesson.Price }} <br>
                     <!-- Spaces: {{ lesson.Spaces }} <br> can modify code to add count -->
                     <button @click="removeFromCart(lesson)">Remove from cart</button>
                     <br>
@@ -165,84 +165,84 @@
             sortedLessons() {
                 switch (this.sort.attribute) {
                     case "Subject":
-                    if (this.sort.sortingOrder == "ascending") {
-                    function compare(a, b) {
-                        if (a.Subject < b.Subject)
-                            return -1;
-                        if (a.Subject > b.Subject)
-                            return 1;
-                        return 0;
-                    }
-                }
-                else if (this.sort.sortingOrder == "descending") {
-                    function compare(a, b) {
-                        if (a.Subject > b.Subject)
-                            return -1;
-                        if (a.Subject < b.Subject)
-                            return 1;
-                        return 0;
-                    }
-                }
+                        if (this.sort.sortingOrder == "ascending") {
+                            function compare(a, b) {
+                                if (a.Subject < b.Subject)
+                                    return -1;
+                                if (a.Subject > b.Subject)
+                                    return 1;
+                                return 0;
+                            }
+                        }
+                        else if (this.sort.sortingOrder == "descending") {
+                            function compare(a, b) {
+                                if (a.Subject > b.Subject)
+                                    return -1;
+                                if (a.Subject < b.Subject)
+                                    return 1;
+                                return 0;
+                            }
+                        }
                         break;
                     case "Price":
-                    if (this.sort.sortingOrder == "ascending") {
-                    function compare(a, b) {
-                        if (a.Price < b.Price)
-                            return -1;
-                        if (a.Price > b.Price)
-                            return 1;
-                        return 0;
-                    }
-                }
-                else if (this.sort.sortingOrder == "descending") {
-                    function compare(a, b) {
-                        if (a.Price > b.Price)
-                            return -1;
-                        if (a.Price < b.Price)
-                            return 1;
-                        return 0;
-                    }
-                }
+                        if (this.sort.sortingOrder == "ascending") {
+                            function compare(a, b) {
+                                if (a.Price < b.Price)
+                                    return -1;
+                                if (a.Price > b.Price)
+                                    return 1;
+                                return 0;
+                            }
+                        }
+                        else if (this.sort.sortingOrder == "descending") {
+                            function compare(a, b) {
+                                if (a.Price > b.Price)
+                                    return -1;
+                                if (a.Price < b.Price)
+                                    return 1;
+                                return 0;
+                            }
+                        }
                         break;
-                        case "Spaces":
-                    if (this.sort.sortingOrder == "ascending") {
-                    function compare(a, b) {
-                        if (a.Spaces < b.Spaces)
-                            return -1;
-                        if (a.Spaces > b.Spaces)
-                            return 1;
-                        return 0;
-                    }
-                }
-                else if (this.sort.sortingOrder == "descending") {
-                    function compare(a, b) {
-                        if (a.Spaces > b.Spaces)
-                            return -1;
-                        if (a.Spaces < b.Spaces)
-                            return 1;
-                        return 0;
-                    }
-                }
+                    case "Spaces":
+                        if (this.sort.sortingOrder == "ascending") {
+                            function compare(a, b) {
+                                if (a.Spaces < b.Spaces)
+                                    return -1;
+                                if (a.Spaces > b.Spaces)
+                                    return 1;
+                                return 0;
+                            }
+                        }
+                        else if (this.sort.sortingOrder == "descending") {
+                            function compare(a, b) {
+                                if (a.Spaces > b.Spaces)
+                                    return -1;
+                                if (a.Spaces < b.Spaces)
+                                    return 1;
+                                return 0;
+                            }
+                        }
                         break;
-                        case "Location":
-                    if (this.sort.sortingOrder == "ascending") {
-                    function compare(a, b) {
-                        if (a.Location < b.Location)
-                            return -1;
-                        if (a.Location > b.Location)
-                            return 1;
-                        return 0;
-                    }
-                }
-                else if (this.sort.sortingOrder == "descending") {
-                    function compare(a, b) {
-                        if (a.Location > b.Location)
-                            return -1;
-                        if (a.Location < b.Location)
-                            return 1;
-                        return 0;
-                    }
-                }
+                    case "Location":
+                        if (this.sort.sortingOrder == "ascending") {
+                            function compare(a, b) {
+                                if (a.Location < b.Location)
+                                    return -1;
+                                if (a.Location > b.Location)
+                                    return 1;
+                                return 0;
+                            }
+                        }
+                        else if (this.sort.sortingOrder == "descending") {
+                            function compare(a, b) {
+                                if (a.Location > b.Location)
+                                    return -1;
+                                if (a.Location < b.Location)
+                                    return 1;
+                                return 0;
+                            }
+                        }
                         break;
                     default:
                     // code block
