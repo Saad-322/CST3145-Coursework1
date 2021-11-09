@@ -133,7 +133,8 @@
                 lesson.Spaces--;
             },
             removeFromCart(lesson) {
-                this.cart.splice(lesson, 1);
+                let index = this.cart.indexOf(lesson);
+                this.cart.splice(index, 1);
                 lesson.Spaces++;
             },
             showCheckout() {
