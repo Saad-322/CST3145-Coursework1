@@ -12,6 +12,7 @@
     .lessonlist {
         display: inline-block;
         margin-left: 100px;
+        margin-top: 50px;
     }
 </style>
 
@@ -43,7 +44,7 @@
             <label>Descending</label>
 
             <ul>
-                <p v-for="lesson in sortedLessons" class="lessonlist">
+                <div v-for="lesson in sortedLessons" class="lessonlist">
                     <span class="fas fa-calculator fa-2x">
                         <img v-bind:src="lesson.Image" alt="" width="60px" height="55px">
                     </span><br>
@@ -53,7 +54,7 @@
                     Spaces: {{ lesson.Spaces }} <br>
                     <button @click="addToCart(lesson)" :disabled="!canAddToCart(lesson)">Add to cart</button>
                     <br>
-                </p>
+                </div>
             </ul>
         </div>
         <div v-else>
@@ -63,7 +64,7 @@
             </button>
             <h2>Your cart</h2>
             <ul>
-                <p v-for="(lesson, lessons) in cart" class="lessonlist">
+                <div v-for="(lesson, lessons) in cart" class="lessonlist">
                     <span class="fas fa-calculator fa-2x">
                         <img v-bind:src="lesson.Image" alt="" width="60px" height="55px">
                     </span><br>
@@ -73,7 +74,7 @@
                     <!-- Spaces: {{ lesson.Spaces }} <br> can modify code to add count -->
                     <button @click="removeFromCart(lesson)">Remove from cart</button>
                     <br>
-                </p>
+                </div>
             </ul>
 
 
