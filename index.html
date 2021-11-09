@@ -35,6 +35,8 @@
             <label>Price</label><br>
             <input type="radio" value="Spaces" name="attributes" v-model=sort.attribute>
             <label>Spaces</label><br>
+            <input type="radio" value="Rating" name="attributes" v-model=sort.attribute>
+            <label>Rating</label><br>
             <input type="radio" value="Availablity" name="attributes" v-model=sort.attribute>
             <label>Availablity</label><br><br>
 
@@ -45,15 +47,15 @@
 
             <ul>
                 <div v-for="lesson in sortedLessons" class="lessonlist">
-                    <span class="fas fa-calculator fa-2x">
-                        <img v-bind:src="lesson.Image" alt="" width="60px" height="55px">
-                    </span><br>
+                    <img v-bind:src="lesson.Image" alt="" width="60px" height="55px">
+                    <br>
                     Subject: {{ lesson.Subject }} <br>
                     Location: {{ lesson.Location }} <br>
                     Price: £{{ lesson.Price }} <br>
                     Spaces: {{ lesson.Spaces }} <br>
-                    <button @click="addToCart(lesson)" :disabled="!canAddToCart(lesson)">Add to cart</button>
-                    <br>
+                    <span v-for="n in lesson.Rating" class="fas fa-star"></span>
+                    <span v-for="n in 5-lesson.Rating" class="far fa-star"></span> <br>
+                    <button @click="addToCart(lesson)" :disabled="!canAddToCart(lesson)">Add to cart</button>                  
                 </div>
             </ul>
         </div>
@@ -241,6 +243,26 @@
                                 if (a.Location > b.Location)
                                     return -1;
                                 if (a.Location < b.Location)
+                                    return 1;
+                                return 0;
+                            }
+                        }
+                        break;
+                        case "Rating":
+                        if (this.sort.sortingOrder == "ascending") {
+                            function compare(a, b) {
+                                if (a.Rating < b.Rating)
+                                    return -1;
+                                if (a.Rating > b.Rating)
+                                    return 1;
+                                return 0;
+                            }
+                        }
+                        else if (this.sort.sortingOrder == "descending") {
+                            function compare(a, b) {
+                                if (a.Rating > b.Rating)
+                                    return -1;
+                                if (a.Rating < b.Rating)
                                     return 1;
                                 return 0;
                             }
