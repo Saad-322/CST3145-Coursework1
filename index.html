@@ -25,6 +25,9 @@
                     <span class="fas fa-shopping-basket"> checkout</span>
                     {{cartItemCount}}
                 </button>
+                <strong>Search Bar</strong>
+                <input type="text" v-model.trim=search>
+                <p>You searched for '{{search}}'</p>
             </div>
             <h3>Sort by</h3>
             <input type="radio" value="Subject" name="attributes" v-model=sort.attribute>
@@ -47,15 +50,17 @@
 
             <ul>
                 <div v-for="lesson in sortedLessons" class="lessonlist">
-                    <img v-bind:src="lesson.Image" alt="" width="100px" height="100px">
-                    <br>
-                    Subject: {{ lesson.Subject }} <br>
-                    Location: {{ lesson.Location }} <br>
-                    Price: £{{ lesson.Price }} <br>
-                    Spaces: {{ lesson.Spaces }} <br>
-                    <span v-for="n in lesson.Rating" class="fas fa-star"></span>
-                    <span v-for="n in 5-lesson.Rating" class="far fa-star"></span> <br><br>
-                    <button @click="addToCart(lesson)" :disabled="!canAddToCart(lesson)">Add to cart</button>                  
+                    <div v-if="lesson.visible">
+                        <img v-bind:src="lesson.Image" alt="" width="100px" height="100px">
+                        <br>
+                        Subject: {{ lesson.Subject }} <br>
+                        Location: {{ lesson.Location }} <br>
+                        Price: £{{ lesson.Price }} <br>
+                        Spaces: {{ lesson.Spaces }} <br>
+                        <span v-for="n in lesson.Rating" class="fas fa-star"></span>
+                        <span v-for="n in 5-lesson.Rating" class="far fa-star"></span> <br><br>
+                        <button @click="addToCart(lesson)" :disabled="!canAddToCart(lesson)">Add to cart</button>
+                    </div>
                 </div>
             </ul>
         </div>
@@ -117,6 +122,7 @@
             lessons: lessonsArray,
             cart: [],
             availableStock: 5,
+            search: "",
             order: {
                 firstName: "",
                 lastName: "",
@@ -156,7 +162,7 @@
             },
             canAddToCart(lesson) {
                 return lesson.Spaces > 0;
-            }
+            },
 
         },
         computed: {
@@ -248,7 +254,7 @@
                             }
                         }
                         break;
-                        case "Rating":
+                    case "Rating":
                         if (this.sort.sortingOrder == "ascending") {
                             function compare(a, b) {
                                 if (a.Rating < b.Rating)
@@ -271,7 +277,13 @@
                     default:
                     // code block
                 }
-
+                for (let i = 0; i < this.lessons.length; i++) {
+                    let Subject = this.lessons[i].Subject.toLowerCase();
+                    let Location = this.lessons[i].Location.toLowerCase();
+                    if (!(Subject.includes(this.search.toLowerCase()) || Location.toLowerCase().includes(this.search.toLowerCase()))) {
+                        this.lessons[i].visible = false;
+                    }
+                }
                 return this.lessons.sort(compare);
             }
 
