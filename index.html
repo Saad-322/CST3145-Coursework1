@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ToDo (Vue.js version)</title>
+    <title>Lessons</title>
     <!-- Load the Vue.js as a JavaScrip library -->
     <script src="https://unpkg.com/vue"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -22,7 +22,7 @@
             <div>
                 <h1>Lessons</h1>
                 <button @click="showCheckout()" :disabled="cartEmpty">
-                    <span class="fas fa-shopping-basket"> checkout</span>
+                    <span class="fas fa-shopping-basket"> shopping cart</span>
                     {{cartItemCount}}
                 </button>
                 <strong>Search Bar</strong>
@@ -63,9 +63,9 @@
             </ul>
         </div>
         <div v-else>
-            <h1>Checkout</h1>
+            <h1>Shopping Cart</h1>
             <button @click="showCheckout()">
-                <span class="fab fa-product-hunt"> products</span>
+                <span class="fab fa-product-hunt"> lessons</span>
             </button>
             <h2>Your cart</h2>
             <ul>
@@ -105,7 +105,7 @@
             <p>Last Name: {{order.lastName}}</p>
             <p>Phone Number: {{order.phoneNumber}}</p>
             <p>Gift: {{order.gift}}</p>
-            <button @Click="submitForm">Place Order</button>
+            <button @Click="submitForm" :disabled="!correctOrderDetails">Checkout</button>
         </div>
     </div>
 
@@ -126,6 +126,7 @@
                 lastName: "",
                 phoneNumber: "",
                 gift: false,
+                correct: false
             },
             sort: {
                 attribute: "",
@@ -147,16 +148,7 @@
                 return this.showProduct = this.showProduct ? false : true;
             },
             submitForm() {
-                let letters = /^[a-z]+$/i;
-                let numbers = /^[0-9]+$/i;
-                if (letters.test(this.order.firstName) &&
-                    letters.test(this.order.lastName) && numbers.test(this.order.phoneNumber)) {
-                    alert("order submitted");
-                }
-                else {
-                    alert("incorrect name/phone number format");
-                }
-
+                alert("order submitted");
             },
             canAddToCart(lesson) {
                 return lesson.Spaces > 0;
@@ -169,6 +161,18 @@
             },
             cartEmpty() {
                 return this.cart.length == 0;
+            },
+            correctOrderDetails(){
+                let letters = /^[a-z]+$/i;
+                let numbers = /^[0-9]+$/i;
+                if (letters.test(this.order.firstName) &&
+                    letters.test(this.order.lastName) && numbers.test(this.order.phoneNumber)) {
+                    this.order.correct = true;   
+                }
+                else {
+                    this.order.correct = false; 
+                }
+                return this.order.correct;
             },
             sortedLessons() {
                 switch (this.sort.attribute) {
