@@ -36,12 +36,10 @@
             <label>Location</label><br>
             <input type="radio" value="Price" name="attributes" v-model=sort.attribute>
             <label>Price</label><br>
-            <input type="radio" value="Spaces" name="attributes" v-model=sort.attribute>
-            <label>Spaces</label><br>
+            <input type="radio" value="Availability" name="attributes" v-model=sort.attribute>
+            <label>Availability</label><br>
             <input type="radio" value="Rating" name="attributes" v-model=sort.attribute>
-            <label>Rating</label><br>
-            <input type="radio" value="Availablity" name="attributes" v-model=sort.attribute>
-            <label>Availablity</label><br><br>
+            <label>Rating</label><br><br>
 
             <input type="radio" value="ascending" name="order" v-model=sort.sortingOrder>
             <label>Ascending</label><br>
@@ -50,7 +48,7 @@
 
             <ul>
                 <div v-for="lesson in sortedLessons" class="lessonlist">
-                    <div v-if="lesson.visible">
+                    <div v-if="lesson.Visible">
                         <img v-bind:src="lesson.Image" alt="" width="100px" height="100px">
                         <br>
                         Subject: {{ lesson.Subject }} <br>
@@ -214,7 +212,7 @@
                             }
                         }
                         break;
-                    case "Spaces":
+                    case "Availability":
                         if (this.sort.sortingOrder == "ascending") {
                             function compare(a, b) {
                                 if (a.Spaces < b.Spaces)
@@ -275,13 +273,16 @@
                         }
                         break;
                     default:
-                    // code block
+                    // code blocks
                 }
                 for (let i = 0; i < this.lessons.length; i++) {
                     let Subject = this.lessons[i].Subject.toLowerCase();
                     let Location = this.lessons[i].Location.toLowerCase();
                     if (!(Subject.includes(this.search.toLowerCase()) || Location.toLowerCase().includes(this.search.toLowerCase()))) {
-                        this.lessons[i].visible = false;
+                        this.lessons[i].Visible = false;
+                    }
+                    else{
+                        this.lessons[i].Visible = true;
                     }
                 }
                 return this.lessons.sort(compare);
