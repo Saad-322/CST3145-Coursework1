@@ -47,8 +47,8 @@
             <label>Descending</label>
 
             <ul>
-                <div v-for="lesson in sortedLessons" class="lessonlist">
-                    <div v-if="lesson.Visible">
+                <div v-for="lesson in sortedLessons" v-if="lesson.Visible" class="lessonlist">
+                    <div >
                         <img v-bind:src="lesson.Image" alt="" width="100px" height="100px">
                         <br>
                         Subject: {{ lesson.Subject }} <br>
