@@ -23,7 +23,7 @@
                 <h1>Lessons</h1>
                 <button @click="showCheckout()" :disabled="cartEmpty">
                     <span class="fas fa-shopping-basket"> shopping cart</span>
-                    {{cartItemCount}}
+                    <b>{{cartItemCount}}</b>
                 </button>
                 <strong>Search Bar</strong>
                 <input type="text" v-model.trim=search>
@@ -65,7 +65,7 @@
         <div v-else>
             <h1>Shopping Cart</h1>
             <button @click="showCheckout()">
-                <span class="fab fa-product-hunt"> lessons</span>
+                <span class="fas fa-book"> lessons</span>
             </button>
             <h2>Your cart</h2>
             <ul>
