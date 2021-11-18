@@ -6,18 +6,11 @@
     <!-- Load the Vue.js as a JavaScrip library -->
     <script src="https://unpkg.com/vue"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
     <script src="lessons.js"></script>
 </head>
-<style>
-    .lessonlist {
-        display: inline-block;
-        margin-left: 100px;
-        margin-top: 50px;
-    }
-</style>
-
 <body>
-    <div id="example-2">
+    <div id="app">
         <div v-if="showProduct">
             <div>
                 <h1>Lessons</h1>
@@ -112,8 +105,8 @@
 
 </body>
 <script>
-    let example2 = new Vue({
-        el: '#example-2',
+    let app = new Vue({
+        el: '#app',
         data: {
             sitename: "Lessons",
             showProduct: "false",
