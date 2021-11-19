@@ -14,7 +14,7 @@
         <div v-if="showProduct">
             <div>
                 <h1>Lessons</h1>
-                <button @click="showCheckout()" :disabled="cartEmpty">
+                <button @click="showCheckout()" v-show="!cartEmpty">
                     <span class="fas fa-shopping-basket"> shopping cart</span>
                     <b>{{cartItemCount}}</b>
                 </button>
