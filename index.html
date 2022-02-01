@@ -7,8 +7,8 @@
     <script src="https://unpkg.com/vue"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="lessons.js"></script>
 </head>
+
 <body>
     <div id="app">
         <div v-if="showProduct">
@@ -18,30 +18,11 @@
                     <span class="fas fa-shopping-basket"> shopping cart</span>
                     <b>{{cartItemCount}}</b>
                 </button>
-                <strong>Search Bar</strong>
-                <input type="text" v-model.trim=search>
-                <p>You searched for '{{search}}'</p>
             </div>
-            <h3>Sort by</h3>
-            <input type="radio" value="Subject" name="attributes" v-model=sort.attribute>
-            <label>Subject</label><br>
-            <input type="radio" value="Location" name="attributes" v-model=sort.attribute>
-            <label>Location</label><br>
-            <input type="radio" value="Price" name="attributes" v-model=sort.attribute>
-            <label>Price</label><br>
-            <input type="radio" value="Availability" name="attributes" v-model=sort.attribute>
-            <label>Availability</label><br>
-            <input type="radio" value="Rating" name="attributes" v-model=sort.attribute>
-            <label>Rating</label><br><br>
-
-            <input type="radio" value="ascending" name="order" v-model=sort.sortingOrder>
-            <label>Ascending</label><br>
-            <input type="radio" value="descending" name="order" v-model=sort.sortingOrder>
-            <label>Descending</label>
 
             <ul>
-                <div v-for="lesson in sortedLessons" v-if="lesson.Visible" class="lessonlist">
-                    <div >
+                <div v-for="lesson in lessons" class="lessonlist">
+                    <div>
                         <img v-bind:src="lesson.Image" alt="" width="100px" height="100px">
                         <br>
                         Subject: {{ lesson.Subject }} <br>
@@ -110,7 +91,7 @@
         data: {
             sitename: "Lessons",
             showProduct: "false",
-            lessons: lessonsArray,
+            lessons: "",
             cart: [],
             availableStock: 5,
             search: "",
@@ -121,12 +102,22 @@
                 gift: false,
                 correct: false
             },
-            sort: {
-                attribute: "",
-                sortingOrder: "",
-            }
+        },
+        mounted: function () {
+            this.displayData() //this method will execute at pageload
         },
         methods: {
+            displayData() {
+                fetch('https://cst-3145-cw2.herokuapp.com/collection/lessons').then(
+                    function (response) {
+                        response.json().then(
+                            function (json) {
+                                app.lessons = json
+                            }
+                        )
+                    }
+                )
+            },
             addToCart(lesson) {
                 console.log("added to cart");
                 this.cart.push(lesson);
@@ -155,134 +146,18 @@
             cartEmpty() {
                 return this.cart.length == 0;
             },
-            correctOrderDetails(){
+            correctOrderDetails() {
                 let letters = /^[a-z]+$/i;
                 let numbers = /^[0-9]+$/i;
                 if (letters.test(this.order.firstName) &&
                     letters.test(this.order.lastName) && numbers.test(this.order.phoneNumber)) {
-                    this.order.correct = true;   
+                    this.order.correct = true;
                 }
                 else {
-                    this.order.correct = false; 
+                    this.order.correct = false;
                 }
                 return this.order.correct;
             },
-            sortedLessons() {
-                switch (this.sort.attribute) {
-                    case "Subject":
-                        if (this.sort.sortingOrder == "ascending") {
-                            function compare(a, b) {
-                                if (a.Subject < b.Subject)
-                                    return -1;
-                                if (a.Subject > b.Subject)
-                                    return 1;
-                                return 0;
-                            }
-                        }
-                        else if (this.sort.sortingOrder == "descending") {
-                            function compare(a, b) {
-                                if (a.Subject > b.Subject)
-                                    return -1;
-                                if (a.Subject < b.Subject)
-                                    return 1;
-                                return 0;
-                            }
-                        }
-                        break;
-                    case "Price":
-                        if (this.sort.sortingOrder == "ascending") {
-                            function compare(a, b) {
-                                if (a.Price < b.Price)
-                                    return -1;
-                                if (a.Price > b.Price)
-                                    return 1;
-                                return 0;
-                            }
-                        }
-                        else if (this.sort.sortingOrder == "descending") {
-                            function compare(a, b) {
-                                if (a.Price > b.Price)
-                                    return -1;
-                                if (a.Price < b.Price)
-                                    return 1;
-                                return 0;
-                            }
-                        }
-                        break;
-                    case "Availability":
-                        if (this.sort.sortingOrder == "ascending") {
-                            function compare(a, b) {
-                                if (a.Spaces < b.Spaces)
-                                    return -1;
-                                if (a.Spaces > b.Spaces)
-                                    return 1;
-                                return 0;
-                            }
-                        }
-                        else if (this.sort.sortingOrder == "descending") {
-                            function compare(a, b) {
-                                if (a.Spaces > b.Spaces)
-                                    return -1;
-                                if (a.Spaces < b.Spaces)
-                                    return 1;
-                                return 0;
-                            }
-                        }
-                        break;
-                    case "Location":
-                        if (this.sort.sortingOrder == "ascending") {
-                            function compare(a, b) {
-                                if (a.Location < b.Location)
-                                    return -1;
-                                if (a.Location > b.Location)
-                                    return 1;
-                                return 0;
-                            }
-                        }
-                        else if (this.sort.sortingOrder == "descending") {
-                            function compare(a, b) {
-                                if (a.Location > b.Location)
-                                    return -1;
-                                if (a.Location < b.Location)
-                                    return 1;
-                                return 0;
-                            }
-                        }
-                        break;
-                    case "Rating":
-                        if (this.sort.sortingOrder == "ascending") {
-                            function compare(a, b) {
-                                if (a.Rating < b.Rating)
-                                    return -1;
-                                if (a.Rating > b.Rating)
-                                    return 1;
-                                return 0;
-                            }
-                        }
-                        else if (this.sort.sortingOrder == "descending") {
-                            function compare(a, b) {
-                                if (a.Rating > b.Rating)
-                                    return -1;
-                                if (a.Rating < b.Rating)
-                                    return 1;
-                                return 0;
-                            }
-                        }
-                        break;
-                }
-                for (let i = 0; i < this.lessons.length; i++) {
-                    let Subject = this.lessons[i].Subject.toLowerCase();
-                    let Location = this.lessons[i].Location.toLowerCase();
-                    if (!(Subject.includes(this.search.toLowerCase()) || Location.toLowerCase().includes(this.search.toLowerCase()))) {
-                        this.lessons[i].Visible = false;
-                    }
-                    else{
-                        this.lessons[i].Visible = true;
-                    }
-                }
-                return this.lessons.sort(compare);
-            }
-
         }
 
     })
