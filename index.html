@@ -25,10 +25,11 @@
                     <div>
                         <img v-bind:src="lesson.Image" alt="" width="100px" height="100px">
                         <br>
+                        Lesson ID: {{lesson.lessonID}} <br>
                         Subject: {{ lesson.Subject }} <br>
                         Location: {{ lesson.Location }} <br>
                         Price: £{{ lesson.Price }} <br>
-                        Spaces: {{ lesson.Spaces }} <br>
+                        Available Spaces: {{ lesson.Spaces }} <br>
                         <span v-for="n in lesson.Rating" class="fas fa-star"></span>
                         <span v-for="n in 5-lesson.Rating" class="far fa-star"></span> <br><br>
                         <button @click="addToCart(lesson)" :disabled="!canAddToCart(lesson)">Add to cart</button>
@@ -46,6 +47,7 @@
                 <div v-for="(lesson, lessons) in cart" class="lessonlist">
                     <img v-bind:src="lesson.Image" alt="" width="100px" height="100px">
                     </span><br>
+                    Lesson ID: {{lesson.lessonID}} <br>
                     Subject: {{ lesson.Subject }} <br>
                     Location: {{ lesson.Location }} <br>
                     Price: £{{ lesson.Price }} <br>
@@ -70,6 +72,14 @@
                 <strong>Phone Number: </strong>
                 <input type="text" v-model.trim=order.phoneNumber>
             </p>
+            <p>
+                <strong>Lesson ID: </strong>
+                <input type="text" v-model.trim=order.lessonID>
+            </p>
+            <p>
+                <strong>Number of Spaces: </strong>
+                <input type="number" v-model.trim=order.spaces>
+            </p>
             <input type="checkbox" value="gift" v-model=order.gift>
             <label>Ship as Gift?</label>
             <br>
@@ -78,6 +88,8 @@
             <p>First Name: {{order.firstName}}</p>
             <p>Last Name: {{order.lastName}}</p>
             <p>Phone Number: {{order.phoneNumber}}</p>
+            <p>Lesson ID: {{order.lessonID}}</p>
+            <p>Spaces: {{order.spaces}}</p>
             <p>Gift: {{order.gift}}</p>
             <button @Click="submitForm" :disabled="!correctOrderDetails">Checkout</button>
         </div>
@@ -99,6 +111,8 @@
                 firstName: "",
                 lastName: "",
                 phoneNumber: "",
+                lessonID: "",
+                spaces: 0,
                 gift: false,
                 correct: false
             },
@@ -121,17 +135,60 @@
             addToCart(lesson) {
                 console.log("added to cart");
                 this.cart.push(lesson);
-                lesson.Spaces--;
             },
             removeFromCart(lesson) {
                 let index = this.cart.indexOf(lesson);
                 this.cart.splice(index, 1);
-                lesson.Spaces++;
             },
             showCheckout() {
                 return this.showProduct = this.showProduct ? false : true;
             },
             submitForm() {
+                //post order first/last name, phone number, spaces, lessonID, gift
+                let order = {
+                    'First Name': this.order.firstName,
+                    'Last Name': this.order.lastName,
+                    'Phone Number': this.order.phoneNumber,
+                    'lessonID': this.order.lessonID,
+                    'Spaces': this.order.spaces,
+                    'Gift': this.order.gift
+                }
+                fetch("https://cst-3145-cw2.herokuapp.com/collection/orders", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(order),
+                }).then(function (response) {
+                    response.json().then(
+                            console.log("Order Successfully posted to database")
+                    )
+                })
+
+                //put to update lesson spaces
+                let oldSpaces = 0
+                for(index = 0;index<10;index++){
+                    console.log(this.lessons[index].lessonID)
+                    console.log(this.order.lessonID)
+                    if(this.lessons[index].lessonID.localeCompare(this.order.lessonID)==0){
+                        oldSpaces = this.lessons[index].Spaces
+                        break
+                    }
+                }
+                let updatedSpaces = {"Spaces":oldSpaces - this.order.spaces}
+
+                fetch("https://cst-3145-cw2.herokuapp.com/collection/lessons/"+this.order.lessonID, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedSpaces),
+                }).then(function (response) {
+                    response.json().then(
+                            console.log("Spaces Successfully updated in Database")
+                    )
+                })
+
                 alert("order submitted");
             },
             canAddToCart(lesson) {
