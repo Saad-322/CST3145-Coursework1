@@ -13,7 +13,7 @@
     <div id="app">
         <div v-if="showProduct">
             <div>
-                <h1>Lessons</h1>
+                <h1>{{this.sitename}}</h1>
                 <button @click="showCheckout()" v-show="!cartEmpty">
                     <span class="fas fa-shopping-basket"> shopping cart</span>
                     <b>{{cartItemCount}}</b>
@@ -101,12 +101,10 @@
     let app = new Vue({
         el: '#app',
         data: {
-            sitename: "Lessons",
+            sitename: "Lessons Store",
             showProduct: "false",
             lessons: "",
             cart: [],
-            availableStock: 5,
-            search: "",
             order: {
                 firstName: "",
                 lastName: "",
@@ -114,7 +112,6 @@
                 lessonID: "",
                 spaces: 0,
                 gift: false,
-                correct: false
             },
         },
         mounted: function () {
