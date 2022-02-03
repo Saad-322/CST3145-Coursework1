@@ -18,10 +18,14 @@
                     <span class="fas fa-shopping-basket"> shopping cart</span>
                     <b>{{cartItemCount}}</b>
                 </button>
+                <strong>Search Bar</strong>
+                <input type="text" v-model.trim=search>
+                <p>You searched for '{{search}}'</p>
+                <button @click='postSearchValue()'>Search</button>
             </div>
 
             <ul>
-                <div v-for="lesson in lessons" class="lessonlist">
+                <div v-for="lesson in lessons" v-if="lesson.Visible" class="lessonlist">
                     <div>
                         <img v-bind:src="lesson.Image" alt="" width="100px" height="100px">
                         <br>
@@ -102,6 +106,7 @@
         el: '#app',
         data: {
             sitename: "Lessons Store",
+            search: "",
             showProduct: "false",
             lessons: "",
             cart: [],
@@ -158,23 +163,23 @@
                     body: JSON.stringify(order),
                 }).then(function (response) {
                     response.json().then(
-                            console.log("Order Successfully posted to database")
+                        console.log("Order Successfully posted to database")
                     )
                 })
 
                 //put to update lesson spaces
                 let oldSpaces = 0
-                for(index = 0;index<10;index++){
+                for (index = 0; index < 10; index++) {
                     console.log(this.lessons[index].lessonID)
                     console.log(this.order.lessonID)
-                    if(this.lessons[index].lessonID.localeCompare(this.order.lessonID)==0){
+                    if (this.lessons[index].lessonID.localeCompare(this.order.lessonID) == 0) {
                         oldSpaces = this.lessons[index].Spaces
                         break
                     }
                 }
-                let updatedSpaces = {"Spaces":oldSpaces - this.order.spaces}
+                let updatedSpaces = { "Spaces": oldSpaces - this.order.spaces }
 
-                fetch("https://cst-3145-cw2.herokuapp.com/collection/lessons/"+this.order.lessonID, {
+                fetch("https://cst-3145-cw2.herokuapp.com/collection/lessons/" + this.order.lessonID, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -182,12 +187,28 @@
                     body: JSON.stringify(updatedSpaces),
                 }).then(function (response) {
                     response.json().then(
-                            console.log("Spaces Successfully updated in Database")
+                        console.log("Spaces Successfully updated in Database")
                     )
                 })
 
                 alert("order submitted");
             },
+            postSearchValue() {
+                fetch("https://cst-3145-cw2.herokuapp.com/collection/search", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/text'
+                    },
+                    body: this.search
+                }).then(
+                    function (response) {
+                        response.json().then(
+                            console.log("search value successfully sent")
+                        )
+                    }
+                )
+            },
+
             canAddToCart(lesson) {
                 return lesson.Spaces > 0;
             },
