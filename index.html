@@ -21,11 +21,10 @@
                 <strong>Search Bar</strong>
                 <input type="text" v-model.trim=search>
                 <p>You searched for '{{search}}'</p>
-                <button @click='postSearchValue()'>Search</button>
             </div>
 
             <ul>
-                <div v-for="lesson in lessons" v-if="lesson.Visible" class="lessonlist">
+                <div v-for="lesson in postSearchValue" v-if="lesson.Visible" class="lessonlist">
                     <div>
                         <img v-bind:src="lesson.Image" alt="" width="100px" height="100px">
                         <br>
@@ -119,9 +118,6 @@
                 gift: false,
             },
         },
-        mounted: function () {
-            this.displayData() //this method will execute at pageload
-        },
         methods: {
             displayData() {
                 fetch('https://cst-3145-cw2.herokuapp.com/collection/lessons').then(
@@ -143,6 +139,7 @@
                 this.cart.splice(index, 1);
             },
             showCheckout() {
+                this.displayData()
                 return this.showProduct = this.showProduct ? false : true;
             },
             submitForm() {
@@ -193,25 +190,6 @@
 
                 alert("order submitted");
             },
-            postSearchValue() {
-                let searchObject = {
-                    'value':this.search
-                }
-                fetch("https://cst-3145-cw2.herokuapp.com/search", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: searchObject,
-                }).then(
-                    function (response) {
-                        response.json().then(
-                            console.log("search value successfully sent")
-                        )
-                    }
-                )
-            },
-
             canAddToCart(lesson) {
                 return lesson.Spaces > 0;
             },
@@ -235,6 +213,23 @@
                     this.order.correct = false;
                 }
                 return this.order.correct;
+            },
+            postSearchValue() {
+                if (this.search==="") {
+                    this.displayData()
+                }
+                else {
+                    fetch('https://cst-3145-cw2.herokuapp.com/search/' + this.search + '/lessons').then(
+                        function (response) {
+                            response.json().then(
+                                function (json) {
+                                    app.lessons = json
+                                }
+                            )
+                        }
+                    )
+                }
+                return this.lessons
             },
         }
 
