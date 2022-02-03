@@ -197,12 +197,12 @@
                 let searchObject = {
                     'value':this.search
                 }
-                fetch("localhost:3000/search", {
+                fetch("https://cst-3145-cw2.herokuapp.com/search", {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/text'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(searchObject)
+                    body: JSON.stringify(searchObject),
                 }).then(
                     function (response) {
                         response.json().then(
