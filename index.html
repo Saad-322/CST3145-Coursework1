@@ -202,7 +202,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(searchObject),
+                    body: searchObject,
                 }).then(
                     function (response) {
                         response.json().then(
