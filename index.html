@@ -194,12 +194,15 @@
                 alert("order submitted");
             },
             postSearchValue() {
+                let searchObject = {
+                    'value':this.search
+                }
                 fetch("https://cst-3145-cw2.herokuapp.com/collection/search", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/text'
                     },
-                    body: this.search
+                    body: JSON.stringify(searchObject)
                 }).then(
                     function (response) {
                         response.json().then(
