@@ -39,7 +39,7 @@
             <input type="radio" value="descending" name="order" v-model=sort.sortingOrder>
             <label>Descending</label>
             <ul>
-                <div v-for="lesson in postSearchValue" v-if="lesson.Visible" class="lessonlist">
+                <div v-for="lesson in postSearchValue" class="lessonlist">
                     <div>
                         <img v-bind:src="lesson.Image" alt="" width="100px" height="100px">
                         <br>
