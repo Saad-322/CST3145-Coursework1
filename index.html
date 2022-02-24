@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Lessons</title>
     <!-- Load the Vue.js as a JavaScrip library -->
-    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="manifest" href="lessons_store.webmanifest">
 </head>
 
 <body>
@@ -112,9 +113,20 @@
             <button @Click="submitForm" :disabled="!correctOrderDetails">Checkout</button>
         </div>
     </div>
-
-
 </body>
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js');
+    };
+    self.addEventListener('install', (e) => {
+        console.log('[Service Worker] Install');
+        e.waitUntil(
+            caches.open(cacheName).then((cache) => {
+                console.log('[Service Worker] Caching all the files');
+                return cache.addAll(cacheFiles);
+            }));
+    });
+</script>
 <script>
     let app = new Vue({
         el: '#app',
@@ -336,7 +348,7 @@
                         }
                         break;
                 }
-                if (this.search==="") {
+                if (this.search === "") {
                     this.displayData()
                 }
                 else {
