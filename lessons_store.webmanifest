@@ -1,0 +1,20 @@
+{
+    "name": "Lessons Store PWA",
+    "short_name": "Lessons Store",
+    "description": "My online after school lessons store PWA",
+    "icons": [
+        {
+            "src": "images/logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "images/logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "index.html",
+    "display": "fullscreen",
+    "background_color": "#B12A34"
+}
