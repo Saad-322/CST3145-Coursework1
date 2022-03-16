@@ -1,7 +1,9 @@
 <template>
   <div id="app">
+    <h1>{{ sitename }}</h1>
     <div v-if="showProduct">
       <button @click="showCheckout">{{ this.cart.length }} Checkout</button>
+      <br> <br>
       <lessons :lessonList="lessonList" @addToCart="addToCart"></lessons>
     </div>
     <div v-else>
@@ -20,6 +22,7 @@ export default {
   name: "App",
   data() {
     return {
+      sitename:"Lesson Store",
       cart: [],
       lessonList: [],
       showProduct: "false",

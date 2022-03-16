@@ -1,25 +1,33 @@
 <template>
   <main>
-    <h1>Shopping Cart</h1>
     <button @click="showCheckout()">
-      <span class="fas fa-book"> lessons</span>
+      <span > Lessons</span>
     </button>
     <h2>Your cart</h2>
     <div>
-                  <ul>
-                <div v-for="lesson in cart" :key="lesson.lessonID" class="lessonlist">
-                    <img v-bind:src="lesson.Image" alt="" width="100px" height="100px">
-                    <br>
-                    Lesson ID: {{lesson.lessonID}} <br>
-                    Subject: {{ lesson.Subject }} <br>
-                    Location: {{ lesson.Location }} <br>
-                    Price: £{{ lesson.Price }} <br>
-                    <!-- <span v-for="n in lesson.Rating" class="fas fa-star"></span>
-                    <span v-for="n in 5-lesson.Rating" class="far fa-star"></span> <br><br> -->
-                    <button @click="removeFromCart(lesson)">Remove from cart</button>
-                    <br>
-                </div>
-            </ul>
+      <ul>
+        <div v-for="lesson in cart" :key="lesson.lessonID" class="lessonlist">
+          <img v-bind:src="lesson.Image" alt="" width="100px" height="100px" />
+          <br />
+          Lesson ID: {{ lesson.lessonID }} <br />
+          Subject: {{ lesson.Subject }} <br />
+          Location: {{ lesson.Location }} <br />
+          Price: £{{ lesson.Price }} <br />
+          <span
+            v-for="n in lesson.Rating"
+            :key="n.lessonID"
+            class="fas fa-star"
+          ></span>
+          <span
+            v-for="n in 5 - lesson.Rating"
+            :key="n.lessonID"
+            class="far fa-star"
+          ></span>
+          <br /><br />
+          <button @click="removeFromCart(lesson)">Remove from cart</button>
+          <br />
+        </div>
+      </ul>
     </div>
     <div>
       <h2>Details</h2>
@@ -63,7 +71,7 @@
 <script>
 export default {
   name: "CheckoutForm",
-  props:['cart'],
+  props: ["cart"],
   data() {
     return {
       showProduct: "false",
@@ -84,9 +92,9 @@ export default {
     submitForm() {
       alert("submitted");
     },
-    removeFromCart(lesson){
-        this.$emit("removeFromCart",lesson)
-    }
+    removeFromCart(lesson) {
+      this.$emit("removeFromCart", lesson);
+    },
   },
   computed: {
     correctOrderDetails() {
@@ -101,8 +109,8 @@ export default {
       } else {
         return false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

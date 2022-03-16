@@ -1,10 +1,9 @@
 <template>
   <main>
     <div>
-      <h1>{{ sitename }}</h1>
-      <strong>Search Bar</strong>
+      <strong>Search Bar </strong>
       <input type="text" v-model.trim="search" />
-      <p>You searched for '{{ search }}'</p>
+      <p> You searched for '{{ search }}'</p>
     </div>
     <h3>Sort by</h3>
     <input
@@ -67,8 +66,8 @@
           Location: {{ lesson.Location }} <br />
           Price: £{{ lesson.Price }} <br />
           Available Spaces: {{ lesson.Spaces }} <br />
-          <!-- <span v-for="n in lesson.Rating" class="fas fa-star"></span>
-                        <span v-for="n in 5-lesson.Rating" class="far fa-star"></span> <br><br> -->
+          <span v-for="n in lesson.Rating" :key="n.lessonID" class="fas fa-star"></span>
+          <span v-for="n in 5-lesson.Rating" :key="n.lessonID" class="far fa-star"></span> <br><br>
           <button @click="addToCart(lesson)" :disabled="!canAddToCart(lesson)">
             Add to cart
           </button>
@@ -81,10 +80,8 @@
 export default {
   name: "LessonsList",
   props:['lessonList'],
-  // data from fetch
   data() {
     return {
-      sitename: "Lessons Store",
       search: "",
       sort: {
         attribute: "",
