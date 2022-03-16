@@ -90,7 +90,7 @@ export default {
       this.$emit("showCheckout");
     },
     submitForm() {
-      alert("submitted");
+      alert("order successfully submitted");
     },
     removeFromCart(lesson) {
       this.$emit("removeFromCart", lesson);

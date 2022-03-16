@@ -45,10 +45,6 @@ export default {
   data() {
     return {
       search: "",
-      sort: {
-        attribute: "",
-        sortingOrder: "",
-      },
     };
   },
   methods: {
